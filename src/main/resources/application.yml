@@ -13,7 +13,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cloud_library?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: 你的数据库密码
+    password: 741852
 
   # ============ Redis ============
   data:
@@ -33,8 +33,8 @@ spring:
   mail:
     host: smtp.qq.com
     port: 465
-    username: 你的qq邮箱
-    password: 你的 QQ 邮箱授权码
+    username: 1042795769@qq.com
+    password: oqmmmsutaimybfic
     default-encoding: UTF-8
     properties:
       mail:
@@ -105,7 +105,7 @@ cloud-library:
     enabled: true
     # 对话接口地址已写死在 AiService.CHAT_URL = https://open.bigmodel.cn/api/paas/v4/chat/completions
     # 注意：必须用英文半角双引号，中文弯引号 “ ” 会被当成 Key 的一部分，导致 401
-    api-key: "你的智谱或者其他ai的API_KEY"
+    api-key: "7446a7ce283542d19c02d7ab7e828255.B3Cn1MUwMYThSXXe"
     model: glm-4-flash                # 免费且稳定的版本（不要用 glm-4.7-flash，思考链长易超时）
     temperature: 0.7
     embedding-base-url: "https://open.bigmodel.cn/api/paas/v4"   # 智谱 OpenAI 兼容 embedding 接口根地址（2026-10-26 启用，实测可用）
