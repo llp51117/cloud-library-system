@@ -21,14 +21,20 @@
 
 ## 🚀 快速启动指南
 ### 1. 后端启动
-1. 在本地 MySQL 中新建数据库 `cloud_library`。
-2. 导入 `sql/cloud_library.sql` 脚本。
-3. 修改 `src/main/resources/application.yml`，填入你的数据库密码与智谱 API Key。
-4. 运行 `CloudLibrarySystemApplication`。
+1. 下载项目到D盘。
+2. 在本地 MySQL 中新建数据库 `cloud-library-system`。
+3. 导入 `sql/cloud_library.sql` 脚本。
+4. 修改 `src/main/resources/application.yml`，填入你的数据库密码，智谱 API Key，邮箱号以及邮箱授权码。
+5. 运行 `CloudLibrarySystemApplication`。
 
 ### 2. 前端启动
 1. 终端进入 `frontend` 目录，运行 `npm install` 安装依赖。
 2. 运行 `npm run dev` 启动项目。
 
 ## 📸 系统预览
-*(请在这里贴 2 张你系统最好看的截图，比如：AI 对话页面、数据概览大屏)*
+用户端tab 
+<img width="1479" height="118" alt="image" src="https://github.com/user-attachments/assets/485dd4bf-a8f5-4982-b27b-5e46346da08a" />
+管理端tab
+<img width="1439" height="135" alt="image" src="https://github.com/user-attachments/assets/26014a13-035e-4a25-9462-d5ea0b130493" />
+用户端最喜欢的页面（光影幻境皮肤超赞的）
+<img width="786" height="581" alt="image" src="https://github.com/user-attachments/assets/b8a78003-9b34-49b0-b083-32e1069e8b43" />
