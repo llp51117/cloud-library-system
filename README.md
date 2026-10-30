@@ -40,7 +40,7 @@
 <img width="786" height="581" alt="image" src="https://github.com/user-attachments/assets/b8a78003-9b34-49b0-b083-32e1069e8b43" />
 
 4. ## 🎬 最喜欢的皮肤演示视频
-**[点击这里直接在线观看演示视频](./demo.mp4)**
+**[点击这里可以下载观看演示视频](./demo.mp4)**
 <video src="https://github.com/llp51117/cloud-library-system/raw/main/demo.mp4" controls="controls" width="100%"></video>
 <img width="850" height="113" alt="image" src="https://github.com/user-attachments/assets/2873d1c4-12e4-4b2a-8ffc-050e61a3bb71" />
 
