@@ -1,0 +1,855 @@
+/* ============================================================
+   云图书管理系统 全局样式（多主题 + 方正直角）
+   - 全站不写死任何颜色：所有颜色都读 CSS 变量，变量由 utils/themes.js 的
+     applyTheme() 在切主题时整体重算（背景 / 卡片 / 边框 / 按钮 / Tab / 文字 /
+     输入框 / 表格 / 分页 / 标签 / 滚动条 / 阴影）。
+   - 下面 :root 里的值只是「首次渲染前的兜底」，默认主题 = 极光圣殿白（浅色），
+     启动后会被 applyTheme() 全部覆盖。
+   - 圆角：全部为 0（方正科技控制面板风）。
+   ============================================================ */
+
+:root {
+  /* ---- 主色 / 点缀色（默认主题：极光圣殿白，点缀色 = 深灰 #333333，纯白 / 浅灰 / 深灰）---- */
+  --cls-primary: #333333;
+  --cls-primary-dark: #242424;
+  --cls-primary-light: #999999;
+  --cls-primary-rgb: 51, 51, 51;
+  --cls-on-primary: #ffffff;
+  --cls-primary-ink: #333333;
+
+  /* ---- 状态色（语义色，各主题通用）---- */
+  --cls-success: #12b76a;
+  --cls-success-rgb: 18, 183, 106;
+  --cls-success-soft: rgba(var(--cls-success-rgb), 0.14);
+  --cls-success-border: rgba(var(--cls-success-rgb), 0.5);
+  --cls-warning: #f5a623;
+  --cls-warning-rgb: 245, 166, 35;
+  --cls-warning-soft: rgba(var(--cls-warning-rgb), 0.14);
+  --cls-warning-border: rgba(var(--cls-warning-rgb), 0.5);
+  --cls-danger: #ef4444;
+  --cls-danger-rgb: 239, 68, 68;
+  --cls-danger-soft: rgba(var(--cls-danger-rgb), 0.14);
+  --cls-danger-border: rgba(var(--cls-danger-rgb), 0.5);
+  /* 中性灰（信息 / 占位），不带蓝调 */
+  --cls-info: #6b7280;
+  --cls-info-rgb: 107, 114, 128;
+
+  /* ---- 背景 ---- */
+  /* 背景：这里的 #f5f7fa 只是「首屏兜底」，启动后 applyTheme() 会按主题深色 D 全部重算 */
+  --bg: #f5f7fa;
+  --bg-soft: #ffffff;
+  --bg-page: linear-gradient(180deg, #ffffff 0%, #f5f7fa 55%, #e9edf2 100%);
+  --topbar-bg: linear-gradient(180deg, #ffffff 0%, #f5f7fa 100%);
+  --cls-bg: var(--bg);
+  --cls-bg-soft: var(--bg-soft);
+  --cls-page-bg: var(--bg-page);
+  --cls-topbar-bg: var(--topbar-bg);
+  /* 顶栏 / Tab 栏上的文字色：按各自底色的明暗自动取黑或白 */
+  --cls-topbar-text: #333333;
+  --cls-bg-soft-text: #333333;
+
+  /* ---- 卡片 ---- */
+  --card-bg: #ffffff;
+  --card-bg-soft: #f8fafc;
+  --card-bg-solid: #ffffff;
+  --card-inner: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(var(--cls-primary-rgb), 0.05) 50%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
+  --card-border: #e5e7eb;
+  --card-border-hover: #cbd5e1;
+  --card-glow: rgba(var(--cls-primary-rgb), 0.2);
+  --cls-card: var(--card-bg);
+  --cls-card-soft: var(--card-bg-soft);
+  --cls-card-solid: var(--card-bg-solid);
+  --cls-card-soft-solid: var(--card-bg-soft);
+  --cls-card-inner: var(--card-inner);
+  --cls-card-border: var(--card-border);
+  --cls-card-border-hover: var(--card-border-hover);
+
+  /* ---- 边框 / 填充 ---- */
+  --border: #e5e7eb;
+  --border-soft: #eef1f5;
+  --border-strong: #cbd5e1;
+  --fill: rgba(var(--cls-primary-rgb), 0.08);
+  --cls-border: var(--border);
+  --cls-border-soft: var(--border-soft);
+  --cls-fill: var(--fill);
+
+  /* ---- 按钮 ---- */
+  --btn-bg: #333333;
+  --btn-border: #333333;
+  --btn-text: #ffffff;
+  --btn-hover-bg: #4d4d4d;
+  --btn-plain-bg: #f8fafc;
+  --btn-plain-text: #333333;
+  --btn-plain-border: #e5e7eb;
+  --btn-plain-hover-bg: rgba(var(--cls-primary-rgb), 0.08);
+  --cls-btn-bg: var(--btn-bg);
+  --cls-btn-border: var(--btn-border);
+
+  /* ---- Tab ---- */
+  --tab-active-bg: #333333;
+  --tab-active-text: #ffffff;
+  --tab-inactive-bg: transparent;
+  --tab-inactive-text: #4b5563;
+  --cls-tab-active-bg: var(--tab-active-bg);
+
+  /* ---- 文字 ---- */
+  --text-main: #333333;
+  --text-regular: #4b5563;
+  --text-sub: #6b7280;
+  --text-placeholder: #9ca3af;
+  --text-highlight: #333333;
+  --title-color: #333333;
+  --cls-text-main: var(--text-main);
+  --cls-text-regular: var(--text-regular);
+  --cls-text-secondary: var(--text-sub);
+  --cls-text-placeholder: var(--text-placeholder);
+
+  /* ---- 输入框 / 弹窗 ---- */
+  --input-bg: #ffffff;
+  --input-border: #e5e7eb;
+  --input-text: #333333;
+  --input-placeholder: #9ca3af;
+  --dialog-bg: #ffffff;
+  --cls-input-bg: var(--input-bg);
+  --cls-dialog-bg: var(--dialog-bg);
+
+  /* ---- 表格 ---- */
+  --table-bg: #f8fafc;
+  --table-header-bg: #f3f5f9;
+  --table-header-text: #333333;
+  --table-text: #4b5563;
+  --table-border: #e5e7eb;
+  --table-row-hover: rgba(var(--cls-primary-rgb), 0.08);
+  --table-row-current: rgba(var(--cls-primary-rgb), 0.12);
+
+  /* ---- 分页 / 标签 ---- */
+  --pagination-bg: #f8fafc;
+  --pagination-text: #4b5563;
+  --tag-bg: rgba(var(--cls-primary-rgb), 0.08);
+  --tag-text: #4b5563;
+  --tag-border: #e5e7eb;
+
+  /* ---- 词条 / 标签（热门搜索词、智能问答提示词）---- */
+  --chip-bg: #ffffff;
+  --chip-text: #4b5563;
+  --chip-border: #e5e7eb;
+  --chip-hover-bg: #f2f2f2;
+  --chip-hover-text: #333333;
+  --chip-hover-border: #cbd5e1;
+
+  /* ---- 滚动条 / 阴影 ---- */
+  --scrollbar-color: rgba(15, 23, 42, 0.24);
+  --scrollbar-color-hover: rgba(var(--cls-primary-rgb), 0.8);
+  --scrollbar-track: transparent;
+  --shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+  --shadow-hover: 0 8px 26px rgba(15, 23, 42, 0.14);
+  --shadow-dialog: 0 12px 40px rgba(15, 23, 42, 0.16);
+  --cls-shadow: var(--shadow);
+  --cls-shadow-hover: var(--shadow-hover);
+  --cls-card-glow: var(--card-glow);
+  /* 卡片渐变描边：主题色亮色 → 主色 → 暗色（由主题实时生成，这里只是兜底） */
+  --cls-card-border-gradient: linear-gradient(
+    135deg,
+    var(--cls-primary-light) 0%,
+    var(--cls-card-border) 45%,
+    var(--cls-primary-dark) 100%
+  );
+
+  /* ---- 圆角（全部方正）---- */
+  --cls-radius-sm: 0;
+  --cls-radius: 0;
+  --cls-radius-lg: 0;
+
+  /* ==========================================================
+     Element Plus 变量：全部指向上面的主题变量（不再写死颜色）
+     ========================================================== */
+  --el-color-primary: var(--cls-primary);
+  --el-color-primary-dark-2: var(--cls-primary-dark);
+  --el-color-primary-light-3: var(--cls-primary);
+  --el-color-primary-light-5: var(--cls-primary-light);
+  --el-color-primary-light-7: var(--cls-primary-light);
+  --el-color-primary-light-8: rgba(var(--cls-primary-rgb), 0.28);
+  --el-color-primary-light-9: rgba(var(--cls-primary-rgb), 0.12);
+  --el-color-success: var(--cls-success);
+  --el-color-warning: var(--cls-warning);
+  --el-color-danger: var(--cls-danger);
+  --el-color-error: var(--cls-danger);
+  --el-color-info: var(--cls-info);
+
+  --el-bg-color: var(--card-bg-solid);
+  --el-bg-color-page: var(--bg);
+  --el-bg-color-overlay: var(--card-bg-solid);
+  --el-fill-color: var(--card-bg-soft);
+  --el-fill-color-light: var(--border-soft);
+  --el-fill-color-lighter: var(--card-bg-soft);
+  --el-fill-color-blank: var(--input-bg);
+  --el-fill-color-darker: var(--border-soft);
+
+  --el-text-color-primary: var(--text-main);
+  --el-text-color-regular: var(--text-regular);
+  --el-text-color-secondary: var(--text-sub);
+  --el-text-color-placeholder: var(--text-placeholder);
+  --el-text-color-disabled: var(--text-placeholder);
+
+  --el-border-color: var(--border);
+  --el-border-color-light: var(--border-soft);
+  --el-border-color-lighter: var(--fill);
+  --el-border-color-extra-light: var(--card-bg-soft);
+  --el-border-color-dark: var(--border-strong);
+  --el-border-color-darker: var(--card-border);
+
+  --el-mask-color: rgba(15, 23, 42, 0.45);
+  --el-box-shadow-light: var(--shadow);
+
+  /* 直角：Element Plus 各组件都读这几个变量 */
+  --el-border-radius-base: 0;
+  --el-border-radius-small: 0;
+  --el-border-radius-round: 0;
+  --el-font-size-base: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: var(--cls-text-main);
+  /* body 背景跟着主题走：底色 --cls-bg，页面渐变 --cls-page-bg（由 applyTheme 整体重算） */
+  background-color: var(--cls-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 页面底：深色 → 更深色 / 浅色 → 更浅的纵向渐变（固定住，不随内容滚动）
+   管理端、用户端都跟随主题，写完渐变就整屏跟着切 */
+html[data-area='user'] body,
+html[data-area='admin'] body {
+  background-image: var(--cls-page-bg);
+  background-attachment: fixed;
+}
+
+a {
+  color: var(--text-highlight);
+  text-decoration: none;
+}
+
+/* 滚动条：颜色跟着主题走 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-color-hover);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+/* ============================================================
+   内容区宽度：用百分比，居中显示，不出现横向滚动条
+   小屏 < 1200px：95%；中屏 1200~1600px：88%；大屏 > 1600px：85%
+   ============================================================ */
+.cls-container {
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 1200px) {
+  .cls-container {
+    width: 95%;
+  }
+}
+
+@media (min-width: 1600px) {
+  .cls-container {
+    width: 85%;
+  }
+}
+
+/* ============ 通用布局类 ============ */
+
+.cls-page {
+  padding: 20px 24px;
+}
+
+/*
+ * 卡片（计分板风格）：灰色半透明底 + 内部「左深 中亮 右深」渐变 + 1px 主色细边框，直角
+ */
+.cls-card {
+  position: relative;
+  background-color: var(--cls-card);
+  background-image: var(--cls-card-inner);
+  border: 1px solid var(--cls-card-border);
+  /* 渐变描边：主题色的亮色 → 暗色（配合上面的 border-color 兜底） */
+  border-image: var(--cls-card-border-gradient) 1;
+  /* 半透明卡片 + 毛玻璃：透出页面渐变，同时压得住亮色区域 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 0;
+  box-shadow: var(--cls-shadow);
+  padding: 20px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.cls-card:hover {
+  border-color: var(--cls-card-border-hover);
+  box-shadow: var(--cls-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* 浅色主题（极光圣殿白 / 霓虹幻梦粉 / 偏亮的自定义主题）：卡片本身是不透明浅色，不需要毛玻璃 */
+html[data-light-theme='true'] .cls-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.cls-card + .cls-card {
+  margin-top: 20px;
+}
+
+/* 标题：主色文字 + 左侧主色小长方体 */
+.cls-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cls-primary-ink);
+}
+
+.cls-section-title .title-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 标题左边的小长方体（主色实心，直角，带一点发光） */
+.cls-section-title .bar {
+  width: 4px;
+  height: 16px;
+  border-radius: 0;
+  background: var(--cls-primary);
+  box-shadow: 0 0 8px var(--cls-card-glow);
+}
+
+.cls-sub-title {
+  font-size: 13px;
+  color: var(--cls-text-secondary);
+  font-weight: 400;
+}
+
+.cls-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.cls-toolbar .flex-1 {
+  flex: 1;
+}
+
+.cls-muted {
+  color: var(--cls-text-secondary);
+}
+
+.cls-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cls-empty {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--cls-text-secondary);
+}
+
+/*
+ * 可点击的头像 / 昵称：RoleAvatar 是多根节点组件，
+ * 父组件的 scoped 样式不一定能作用到它的根节点，所以这里放成全局样式。
+ */
+.clickable-avatar {
+  cursor: pointer;
+}
+
+/* 卡片悬浮效果：轻微上浮 + 描边发光 */
+.cls-hover-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.cls-hover-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cls-shadow-hover);
+}
+
+/* ============================================================
+   Element Plus 组件适配（亮色 + 方正）
+   ============================================================ */
+
+/* 表格配色（底色 / 表头 / 行悬停）由主题的 CSS 变量给，这里不再写死，
+   否则 .el-table 上的声明会盖掉 :root 的主题变量 */
+.el-table {
+  border-radius: 0;
+  color: var(--cls-text-regular);
+}
+
+/* 表格行悬停：整行高亮（颜色跟着主题） */
+.el-table__body tr:hover > td.el-table__cell {
+  background-color: var(--table-row-hover) !important;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+  color: var(--cls-text-main);
+}
+
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+  border-bottom-color: var(--cls-border-soft);
+}
+
+/* 表格空数据 / 加载遮罩 */
+.el-table__empty-text {
+  color: var(--cls-text-secondary);
+}
+
+.el-card {
+  border-radius: 0;
+  border: 1px solid var(--cls-card-border);
+  /* 浮层 / 面板要实色，半透明会透出下面的内容 */
+  background-color: var(--cls-card-solid);
+  background-image: var(--cls-card-inner);
+  color: var(--cls-text-regular);
+}
+
+.el-button {
+  border-radius: 0;
+}
+
+/* 主按钮：按钮色填充（默认主色，自定义主题用分配到的按钮色） */
+.el-button--primary {
+  background-color: var(--btn-bg);
+  border-color: var(--btn-border);
+  color: var(--btn-text);
+  transition: box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: var(--btn-hover-bg);
+  border-color: var(--btn-hover-bg);
+  color: var(--btn-text);
+}
+
+.el-button--primary:hover {
+  box-shadow: 0 0 18px rgba(var(--cls-primary-rgb), 0.6);
+  filter: brightness(1.12);
+}
+
+/* 次要按钮：朴素底 + 主题边框，悬停用主题填充色 */
+.el-button:not(.el-button--primary):not(.el-button--danger):not(.el-button--success):not(.el-button--warning) {
+  --el-button-bg-color: var(--btn-plain-bg);
+  --el-button-text-color: var(--btn-plain-text);
+  --el-button-border-color: var(--btn-plain-border);
+  --el-button-hover-bg-color: var(--btn-plain-hover-bg);
+  --el-button-hover-text-color: var(--btn-plain-text);
+  --el-button-hover-border-color: var(--card-border-hover);
+}
+
+/* 输入框：比卡片亮一点（用 --cls-input-bg，不是白色） */
+.el-input__wrapper,
+.el-textarea__inner {
+  border-radius: 0;
+  background-color: var(--cls-input-bg);
+  box-shadow: 0 0 0 1px var(--cls-border) inset;
+}
+
+.el-input__inner {
+  color: var(--cls-text-main);
+}
+
+/* 悬停 / 聚焦：用「和输入框底色拉开色差」的主题色（--input-focus-border 已过色差保护），
+   保证任何主题下都看得出输入框的框 */
+.el-input__wrapper:hover,
+.el-textarea__inner:hover {
+  box-shadow: 0 0 0 1px var(--input-focus-border, var(--cls-primary)) inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--input-focus-border, var(--cls-primary)) inset,
+    0 0 8px var(--cls-card-glow);
+}
+
+/* 弹窗：主题弹窗色 + 主题描边 + 主题阴影 */
+.el-dialog {
+  border-radius: 0;
+  background: var(--dialog-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-dialog);
+}
+
+.el-dialog__title,
+.el-dialog__body {
+  color: var(--cls-text-main);
+}
+
+.el-message-box {
+  background: var(--cls-dialog-bg);
+  border: 1px solid var(--cls-card-border);
+}
+
+.el-message-box__title,
+.el-message-box__content {
+  color: var(--cls-text-main);
+}
+
+.el-tabs__item {
+  font-size: 14px;
+  color: var(--cls-text-regular);
+}
+
+.el-tabs__item.is-active {
+  color: var(--text-highlight);
+}
+
+.el-pagination {
+  --el-pagination-bg-color: transparent;
+  color: var(--cls-text-regular);
+}
+
+/* 分页选中页：主色填充，文字色跟主色明暗自动匹配 */
+.el-pager li.is-active {
+  color: var(--cls-on-primary);
+}
+
+/* 小 Tab 切换（列表 / 折线图 这类单选按钮组）：
+   未选中 = 卡片底 + 正文色（已过对比度保护）；
+   选中 = 高亮底 + 自动黑 / 白的高对比字，自定义主题取到再怪的色也不会「同色底同色字」 */
+.el-radio-button__inner {
+  background: var(--btn-plain-bg);
+  color: var(--text-regular);
+  border-color: var(--card-border);
+}
+
+.el-radio-button__original-radio:checked + .el-radio-button__inner {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  border-color: var(--tab-active-bg);
+  box-shadow: -1px 0 0 0 var(--tab-active-bg);
+}
+
+.el-radio-button__original-radio:checked + .el-radio-button__inner:hover {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  border-color: var(--tab-active-bg);
+}
+
+.el-tag {
+  border-radius: 0;
+}
+
+.el-select-dropdown,
+.el-dropdown-menu,
+.el-popper.is-light {
+  background: var(--card-bg-solid);
+  border: 1px solid var(--card-border);
+  color: var(--text-regular);
+}
+
+.el-popper.is-light .el-popper__arrow::before {
+  background: var(--card-bg-solid);
+  border-color: var(--card-border);
+}
+
+.el-descriptions__label {
+  color: var(--cls-text-secondary) !important;
+}
+
+.el-descriptions__content {
+  color: var(--cls-text-main) !important;
+}
+
+/*
+ * 提示条（el-alert）：深色半透明底 + 主题色（或状态色）描边 + 亮色文字
+ * （评论管理里的「@管理员」提示条、系统已删提示等都用这一套）
+ */
+.el-alert.is-light {
+  color: var(--text-main);
+  border: 1px solid var(--border);
+}
+
+.el-alert--info.is-light {
+  background-color: var(--fill);
+}
+
+.el-alert--success.is-light {
+  background-color: var(--cls-success-soft);
+  border-color: var(--cls-success-border);
+}
+
+.el-alert--warning.is-light {
+  background-color: var(--cls-warning-soft);
+  border-color: var(--cls-warning-border);
+}
+
+.el-alert--error.is-light {
+  background-color: var(--cls-danger-soft);
+  border-color: var(--cls-danger-border);
+}
+
+.el-alert .el-alert__title,
+.el-alert .el-alert__description {
+  color: var(--cls-text-main);
+}
+
+.el-alert--info .el-alert__icon {
+  color: var(--text-highlight);
+}
+
+/* 分割线 / 时间线 / 空状态 */
+.el-divider {
+  border-color: var(--cls-border-soft);
+}
+
+.el-divider__text {
+  background: var(--card-bg-solid);
+  color: var(--text-sub);
+}
+
+.el-empty__description p {
+  color: var(--cls-text-secondary);
+}
+
+/* ============================================================
+   用户端：全部直角（Element Plus 里有几个组件是写死圆角的，这里统一压成 0）
+   —— 只在 data-area="user" 时生效，管理端保持它原来的圆角
+   ============================================================ */
+html[data-area='user'] .el-button,
+html[data-area='user'] .el-input__wrapper,
+html[data-area='user'] .el-textarea__inner,
+html[data-area='user'] .el-select__wrapper,
+html[data-area='user'] .el-input-group__append,
+html[data-area='user'] .el-input-group__prepend,
+html[data-area='user'] .el-card,
+html[data-area='user'] .el-dialog,
+html[data-area='user'] .el-drawer,
+html[data-area='user'] .el-message-box,
+html[data-area='user'] .el-message,
+html[data-area='user'] .el-notification,
+html[data-area='user'] .el-tag,
+html[data-area='user'] .el-alert,
+html[data-area='user'] .el-popper,
+html[data-area='user'] .el-select-dropdown,
+html[data-area='user'] .el-dropdown-menu,
+html[data-area='user'] .el-autocomplete-suggestion,
+html[data-area='user'] .el-pager li,
+html[data-area='user'] .el-radio-button__inner,
+html[data-area='user'] .el-upload,
+html[data-area='user'] .el-upload__input,
+html[data-area='user'] .el-image__inner,
+html[data-area='user'] .el-progress-bar__outer,
+html[data-area='user'] .el-progress-bar__inner,
+html[data-area='user'] .el-tabs__nav,
+html[data-area='user'] .el-collapse-item__header,
+html[data-area='user'] .el-collapse-item__wrap,
+html[data-area='user'] .el-table,
+html[data-area='user'] .el-descriptions__body {
+  border-radius: 0 !important;
+}
+
+/* ============================================================
+   内置 11 套主题专属：赛博朋克 / 电子科技质感
+   只在 html[data-cyber='true']:not([data-area='admin']) 时生效（自定义主题 = false，保持用户自己的配色）。
+   用到的 --cyber-* 变量由 themes.js 的 applyTheme() 按主题现场生成。
+   页面底纹（点阵网格 + 径向光晕）已经直接叠进 --cls-page-bg，这里只管构件本身。
+   ============================================================ */
+
+/* 一、卡片 / 面板：半透明玻璃态 + 顶部高光 + 内发光 */
+html[data-cyber='true']:not([data-area='admin']) .cls-card,
+html[data-cyber='true']:not([data-area='admin']) .book-card {
+  background-color: var(--cyber-card-bg);
+  border: 1px solid var(--cyber-border);
+  /* 玻璃态要的是纯色亮线描边，关掉原来的渐变描边 */
+  border-image: none;
+  backdrop-filter: var(--cyber-card-backdrop);
+  -webkit-backdrop-filter: var(--cyber-card-backdrop);
+}
+
+/* 卡片内发光：光从卡片底部往上淡出（和 Tab 选中一个手法，收在方块内部） */
+html[data-cyber='true']:not([data-area='admin']) .cls-card {
+  box-shadow: var(--shadow), inset 0 0 26px var(--cyber-inner-glow),
+    inset 0 -48px 60px -48px rgba(var(--cyber-glow-rgb), 0.4);
+}
+
+html[data-cyber='true']:not([data-area='admin']) .book-card {
+  box-shadow: var(--shadow), inset 0 -48px 60px -48px rgba(var(--cyber-glow-rgb), 0.4);
+}
+
+/* 全透明卡片：深色主题的文字直接坐在页面渐变上，加淡阴影兜住可读性 */
+html[data-cyber='true'][data-light-theme='false']:not([data-area='admin']) {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* 顶部高光：1px 渐变亮线，像玻璃反光 */
+html[data-cyber='true']:not([data-area='admin']) .cls-card::before,
+html[data-cyber='true']:not([data-area='admin']) .book-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--cyber-top-line);
+  pointer-events: none;
+}
+
+/* 右下角的科技角标（极淡，不抢眼） */
+html[data-cyber='true']:not([data-area='admin']) .cls-card::after {
+  content: '';
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 12px;
+  height: 12px;
+  border-right: 1px solid var(--cyber-edge-glow);
+  border-bottom: 1px solid var(--cyber-edge-glow);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* 悬停：光全部朝内（内发光 + 底部朝上的光加强），不往外发光、不放大 */
+html[data-cyber='true']:not([data-area='admin']) .cls-card:hover,
+html[data-cyber='true']:not([data-area='admin']) .book-card:hover {
+  border-color: var(--cyber-border-hover);
+  box-shadow: inset 0 0 34px var(--cyber-edge-glow),
+    inset 0 -56px 66px -48px rgba(var(--cyber-glow-rgb), 0.55);
+}
+
+/* 赛博：一律直角，拒绝圆角（头像保持圆形） */
+html[data-cyber='true']:not([data-area='admin']) *,
+html[data-cyber='true']:not([data-area='admin']) *::before,
+html[data-cyber='true']:not([data-area='admin']) *::after {
+  border-radius: 0 !important;
+}
+html[data-cyber='true']:not([data-area='admin']) .avatar-box,
+html[data-cyber='true']:not([data-area='admin']) .avatar-inner,
+html[data-cyber='true']:not([data-area='admin']) .avatar-img,
+html[data-cyber='true']:not([data-area='admin']) .avatar-letter,
+html[data-cyber='true']:not([data-area='admin']) .el-avatar {
+  border-radius: 50% !important;
+}
+
+/* Element Plus 面板：保持实色（半透明会透出下面的内容），只加科技边框 + 内发光 */
+html[data-cyber='true']:not([data-area='admin']) .el-card {
+  border: 1px solid var(--cyber-border);
+  box-shadow: var(--shadow), inset 0 0 24px var(--cyber-inner-glow);
+}
+
+/* 二、顶部 Tab 栏：主题深色版底 + 选中项底部 2px 发光亮线 */
+html[data-cyber='true']:not([data-area='admin']) .tabbar {
+  background: var(--cyber-tabbar-bg);
+  border-bottom: 1px solid var(--cyber-tabbar-border);
+}
+
+/* 未选中：半透明浅色字，悬停变亮 */
+html[data-cyber='true']:not([data-area='admin']) .tab-item {
+  color: var(--cyber-tab-inactive-text);
+}
+
+html[data-cyber='true']:not([data-area='admin']) .tab-item:hover {
+  color: var(--cyber-tab-hover-text);
+  background-color: var(--cyber-tab-hover-bg);
+  /* 悬停的光也朝内（比选中态弱一点） */
+  box-shadow: inset 0 -34px 44px -34px rgba(var(--cyber-glow-rgb), 0.3);
+}
+
+/* 选中：淡主题色底 + 主题亮色字（选中感靠亮字 + 底部发光线，不搞大色块） */
+html[data-cyber='true']:not([data-area='admin']) .tab-item.active {
+  background: var(--cyber-tab-active-bg);
+  color: var(--cyber-tab-active-text);
+  border-bottom-color: transparent;
+}
+
+/* 选中项的内发光：光从底部亮线往上、收在方块内部（和管理端一致，感官是方正的） */
+html[data-cyber='true']:not([data-area='admin']) .tab-item.active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(var(--cyber-glow-rgb), 0.34) 0%,
+    rgba(var(--cyber-glow-rgb), 0.14) 42%,
+    transparent 78%
+  );
+  pointer-events: none;
+}
+
+/* 选中项底部那条 2px 亮线：干净的线，不往外发光 */
+html[data-cyber='true']:not([data-area='admin']) .tab-item.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--cyber-tab-line);
+  box-shadow: 0 0 4px rgba(var(--cyber-glow-rgb), 0.6);
+  pointer-events: none;
+}
+
+/* 三、按钮：直角 + 内描边 + 悬停发光 */
+html[data-cyber='true']:not([data-area='admin']) .el-button--primary {
+  box-shadow: inset 0 0 0 1px var(--cyber-edge-glow);
+}
+
+html[data-cyber='true']:not([data-area='admin']) .el-button--primary:hover,
+html[data-cyber='true']:not([data-area='admin']) .el-button--primary:focus {
+  /* 悬停的光朝内：内描边 + 内发光，不往外发光 */
+  box-shadow: inset 0 0 0 1px var(--cyber-glow),
+    inset 0 0 16px rgba(var(--cyber-glow-rgb), 0.45);
+}
+
+/* 输入框聚焦的光同样朝内 */
+html[data-cyber='true']:not([data-area='admin']) .el-input__wrapper.is-focus,
+html[data-cyber='true']:not([data-area='admin']) .el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--input-focus-border, var(--cls-primary)) inset,
+    inset 0 0 14px rgba(var(--cyber-glow-rgb), 0.28);
+}
+
+/* 自定义主题（图片取色）：只有顶部 Tab 选中不发光（去掉外扩的 box-shadow），
+   按钮等其他地方的悬停发光保持原样 */
+html[data-theme^='custom-']:not([data-area='admin']) .tab-item.active {
+  box-shadow: none;
+}
+
+/* 四、标题左侧的竖线：主题色 + 发光 */
+html[data-cyber='true']:not([data-area='admin']) .cls-section-title .bar {
+  background: var(--cyber-glow);
+  box-shadow: 0 0 10px var(--cyber-glow), 0 0 18px var(--cyber-edge-glow);
+}

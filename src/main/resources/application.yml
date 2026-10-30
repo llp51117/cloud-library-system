@@ -1,0 +1,122 @@
+server:
+  port: 8080
+  address: 0.0.0.0   # 允许局域网其他设备访问后端接口
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: cloud-library-system
+
+  # ============ 数据源 ============
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cloud_library?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 你的数据库密码
+
+  # ============ Redis ============
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password:
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+  # ============ 邮件 ============
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 你的qq邮箱
+    password: 你的 QQ 邮箱授权码
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+
+  # ============ 文件上传 ============
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      # 单张图片仍限 10MB（FileService 里也做了校验），这里放宽是为了支持「批量上传封面」一次提交多张
+      max-request-size: 200MB
+
+  # ============ JSON 序列化 ============
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+# ============ MyBatis-Plus ============
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+      table-underline: true
+
+# ============ 业务自定义配置 ============
+cloud-library:
+  # JWT 配置
+  jwt:
+    secret: cloud-library-system-jwt-secret-key-2026-group1-please-change-in-production-env
+    expire-hours: 24
+    header: Authorization
+    prefix: "Bearer "
+
+  # 借阅规则
+  borrow:
+    days: 10          # 借阅期限（天）
+    renew-days: 15    # 续借延长天数
+    renew-limit: 1    # 最多续借次数
+    renew-before-days: 3   # 应还日前 N 天内可续借
+
+  # 预约规则
+  reservation:
+    keep-hours: 24    # 可借阅后保留小时数，超时自动顺延
+
+  # 文件上传
+  upload:
+    path: ./uploads/
+    url-prefix: /uploads/
+
+  # 语义检索（Milvus / Embedding）
+  vector:
+    enabled: false                       # 未部署 Milvus 时自动降级为关键词语义检索
+    milvus-host: localhost
+    milvus-port: 19530
+    collection: book_vectors
+    dimension: 1536
+
+  # AI 能力（智谱 GLM，OpenAI 兼容的 chat/completions 接口）
+  ai:
+    enabled: true
+    # 对话接口地址已写死在 AiService.CHAT_URL = https://open.bigmodel.cn/api/paas/v4/chat/completions
+    # 注意：必须用英文半角双引号，中文弯引号 “ ” 会被当成 Key 的一部分，导致 401
+    api-key: "你的智谱或者其他ai的API_KEY"
+    model: glm-4-flash                # 免费且稳定的版本（不要用 glm-4.7-flash，思考链长易超时）
+    temperature: 0.7
+    embedding-base-url: "https://open.bigmodel.cn/api/paas/v4"   # 智谱 OpenAI 兼容 embedding 接口根地址（2026-10-26 启用，实测可用）
+    embedding-model: "embedding-2"                                # 智谱免费向量模型
+    timeout-seconds: 30                  # 兼容保留项：代码当前固定使用 60 秒读取超时（AiService.READ_TIMEOUT_MS），改这里不生效
+
+  # 邮件开关（关闭时验证码打印到控制台，便于本地开发调试）
+  email:
+    enabled: true
+    from-name: 云图书管理系统
+
+logging:
+  level:
+    com.group1.cloudlibrary: debug
